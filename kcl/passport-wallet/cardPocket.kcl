@@ -1,0 +1,28 @@
+import cardPocketOuterWidth, cardPocketOuterHeight from "globals.kcl"
+
+// Magic numbers taken from Figma when I did the design
+magicMargin = 3.0
+magicWidth = 8.937 
+magicWidth00 = 8.937 + magicMargin
+magicWidth01 = 17.7
+magicWidth02 = 35.705
+
+export fn cardPocket (offsetSketchPlane, depth) {
+  cardPocketSketch = offsetSketchPlane
+    |> startProfileAt([0,0], %)
+    |> xLine(cardPocketOuterWidth, %)
+    |> yLine(magicWidth00, %)
+    |> line(end=[-magicWidth01, magicWidth])
+    |> yLine(magicWidth02, %) // half because the other pocket makes up the full value
+    |> line(end=[magicWidth01, magicWidth])
+    |> yLine(magicWidth, %)
+    |> xLine(-cardPocketOuterWidth, %)
+    |> line(endAbsolute=[profileStartX(%), profileStartY(%)])
+    |> close(%)
+    |> mirror2d({
+      axis = "X",
+    }, %)
+
+  extrudedCardPocketSketch = extrude(cardPocketSketch, length = depth)
+  return extrudedCardPocketSketch
+}

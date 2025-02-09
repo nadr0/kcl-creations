@@ -1,0 +1,20 @@
+
+import pocketWidth, pocketHeight from 'globals.kcl'
+
+export fn pocket (offsetSketchPlane, depth, x, y) {
+  pocketSketch = offsetSketchPlane
+  |> startProfileAt([x,y], %)
+  |> angledLine([0, pocketWidth], %, $rectangleSegmentA001)
+  |> angledLine([
+       segAng(rectangleSegmentA001) - 90,
+       pocketHeight
+     ], %, $rectangleSegmentB001)
+  |> angledLine([
+       segAng(rectangleSegmentA001),
+       -segLen(rectangleSegmentA001)
+     ], %, $rectangleSegmentC001)
+  |> line(endAbsolute=[profileStartX(%), profileStartY(%)])
+  |> close(%) 
+  extrudedPocketSketch = extrude(pocketSketch, length = depth)
+  return extrudedPocketSketch
+}

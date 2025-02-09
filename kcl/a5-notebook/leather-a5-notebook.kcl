@@ -1,0 +1,68 @@
+// Leather A5 Notebook
+// All values are in mm
+height = 221
+right_pane = 154 + 3
+left_pane = right_pane
+center_pane = 30
+total_width = right_pane + left_pane + center_pane
+thickness = 3
+punch_hole_radius = 3.2 / 2
+punch_hole_offset_a = 5.5
+punch_hole_offset_b = 5.0
+
+leather_notebook = startSketchOn('XY')
+  |> startProfileAt([0, 0], %)
+  |> angledLine([0, total_width], %, $rectangleSegmentA001)
+  |> angledLine([
+       segAng(rectangleSegmentA001) - 90,
+       height
+     ], %, $rectangleSegmentB001)
+  |> angledLine([
+       segAng(rectangleSegmentA001),
+       -segLen(rectangleSegmentA001)
+     ], %, $rectangleSegmentC001)
+  |> line(endAbsolute=[profileStartX(%), profileStartY(%)])
+  |> close(%)
+
+extruded_leather_notebook = extrude(leather_notebook, length=thickness)
+
+ph1_offset = -punch_hole_offset_a - punch_hole_radius
+punch_hole_1 = startSketchOn(extruded_leather_notebook, 'END')
+  |> circle({
+       center: [total_width/2, ph1_offset],
+       radius: punch_hole_radius
+     }, %)
+
+ph2_offset = -punch_hole_offset_a - punch_hole_offset_b - punch_hole_radius - punch_hole_radius
+punch_hole_2 = startSketchOn(extruded_leather_notebook, 'END')
+  |> circle({
+       center: [total_width/2, ph2_offset],
+       radius: punch_hole_radius
+     }, %)
+
+ph3_offset = -height + punch_hole_offset_a + punch_hole_radius
+punch_hole_3 = startSketchOn(extruded_leather_notebook, 'END')
+  |> circle({
+       center: [total_width/2, ph3_offset],
+       radius: punch_hole_radius
+     }, %)
+
+ph4_offset = -height + punch_hole_offset_a + punch_hole_offset_b + punch_hole_radius + punch_hole_radius
+punch_hole_4 = startSketchOn(extruded_leather_notebook, 'END')
+  |> circle({
+       center: [total_width/2, ph4_offset],
+       radius: punch_hole_radius
+     }, %)
+
+center_punch_hole = startSketchOn(extruded_leather_notebook, 'END')
+  |> circle({
+      center: [total_width/2, -height/2],
+      radius: punch_hole_radius
+  },%)
+
+// Extrude all the punch holes
+extrude(punch_hole_1, length=-thickness)
+extrude(punch_hole_2, length=-thickness)
+extrude(punch_hole_3, length=-thickness)
+extrude(punch_hole_4, length=-thickness)
+extrude(center_punch_hole, length=-thickness)

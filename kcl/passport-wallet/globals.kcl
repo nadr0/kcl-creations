@@ -1,0 +1,23 @@
+// mm dimensions
+// Cover 
+export coverWidth = 211
+export coverHeight = 149
+
+// Pockets
+export pocketWidth = 91
+export pocketHeight = 149
+
+// Card pockets
+export cardPocketOuterWidth = 86
+export cardPocketOuterHeight = 149
+
+// Depths
+// Leather material depths
+// Cover 4.5/5 oz (1.8 - 2.0mm)
+// Pockets 3.5/4 oz (1.4 - 1.6mm)
+// Card Pockets 3.5/4 oz (1.4 - 1.6mm)
+export coverLeatherDepth = 2.0
+export pocketLeatherDepth = 1.6
+export cardPocketLeatherDepth = 1.6
+
+export print3DDepth = 3.0 // When 3D printing these print with a depth of 3mm not the leather depths!

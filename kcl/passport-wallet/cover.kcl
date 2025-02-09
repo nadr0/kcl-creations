@@ -1,0 +1,21 @@
+// mm
+import coverWidth, coverHeight from "globals.kcl"
+
+export fn cover(depth,x,y) {
+  coverSketch = startSketchOn('XY')
+  |> startProfileAt([x,y], %)
+  |> angledLine([0, coverWidth], %, $rectangleSegmentA001)
+  |> angledLine([
+       segAng(rectangleSegmentA001) - 90,
+       coverHeight
+     ], %, $rectangleSegmentB001)
+  |> angledLine([
+       segAng(rectangleSegmentA001),
+       -segLen(rectangleSegmentA001)
+     ], %, $rectangleSegmentC001)
+  |> line(endAbsolute=[profileStartX(%), profileStartY(%)])
+  |> close(%)
+
+  extrudedCover = extrude(coverSketch, length=depth)
+  return extrudedCover
+}

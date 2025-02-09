@@ -1,0 +1,19 @@
+import cover from "cover.kcl"
+import pocket from "pocket.kcl"
+import cardPocket from "cardPocket.kcl"
+import coverLeatherDepth, pocketLeatherDepth, coverWidth, coverHeight, pocketWidth, cardPocketLeatherDepth from "globals.kcl"
+
+// Construction geometry for layers of the wallet
+pocketLayer = offsetPlane('XY', coverLeatherDepth)
+cardPocketLayer = offsetPlane('XY', coverLeatherDepth + pocketLeatherDepth)
+
+// Construct the passport wallet
+// Shift everything in the Y because of mirror2d?
+// coverHeight/2
+cover(coverLeatherDepth,0,coverHeight/2)
+pocket(pocketLayer, pocketLeatherDepth, 0, coverHeight/2)
+pocket(pocketLayer, pocketLeatherDepth, coverWidth - pocketWidth, coverHeight/2)
+cardPocket(cardPocketLayer, cardPocketLeatherDepth)
+
+// No radius defined on the corners, this is up to your stitch line.
+
